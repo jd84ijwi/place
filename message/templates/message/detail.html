@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Message  رسالة{% endblock %}
+
+{% block content %}
+<h1 class="mb-7 text-4xl"> Message &nbsp; &nbsp; رسالة </h1>
+
+<div class="space-y-6">
+    {% for message in message.messages.all %}
+        <div class="p-6 flex-col {% if message.created_by == request.user %}bg-violet-400{% else %}bg-neutral-400{% endif %} rounded-xl">
+            <p class="mb-3"><strong>{{ message.created_by.username }}</strong> @ {{ message.created_at }}</p>
+            <p> {{ message.content }} </p>
+          </div>
+  {% endfor %}
+</div>
+
+<form method="post" action="." class="mt-5">  
+    {% csrf_token %}
+
+    {{form.as_p}}
+    <button class="py-4 px-6 text-lg bg-cyan500 hover:bg-cyan-700 rounded-xl text-:white">Send &nbsp; &nbsp; إرسال </button>
+</form>
+  {% endblock %}

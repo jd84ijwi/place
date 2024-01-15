@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Inbox  الواردات{% endblock %}
+
+{% block content %}
+<h1 class="mb-7 text-4xl"> Inbox &nbsp; &nbsp; الواردات </h1>
+
+<div class="space-y-6">
+    {% for message in messages %}
+        <a href="{% url 'message:detail' message.id %}">
+          <div class="p-6 flex bg-cyan-500 rounded-xl">
+            <div class="pr-9">
+              <img src="{{ message.item.image.url }}" class="w-20 rounded-xl">
+            </div>
+            <div>
+              {% for member in message.members.all %}
+                  {% if member != request.user %}
+                      <p class="mb-4"><strong>{{ member.username }} </strong> | {{ message.modified_at }}</p>
+                      <p>{{ message.item.name }}</p>
+                  {% endif %}
+              {% endfor %}
+
+
+            </div>
+          </div>
+        </a>
+  {% endfor %}
+</div>
+{% endblock %}
+
+
